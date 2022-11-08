@@ -9,11 +9,21 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": "/"
+        },
+        "locales": {
+          "ru": {
+            "translation": "src/locale/messages.ru.xlf"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/universal-internationalization",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -25,10 +35,13 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "aot": true,
+            "localize": true
           },
           "configurations": {
             "production": {
+              "outputPath": "dist/prod/server",
               "budgets": [
                 {
                   "type": "initial",
@@ -50,12 +63,24 @@
               "outputHashing": "all"
             },
             "development": {
+              "outputPath": "dist/dev/server",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "development_no_localize": {
+              "outputPath": "dist/dev/server",
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": false,
+              "localize": false
             }
           },
           "defaultConfiguration": "production"
@@ -68,14 +93,24 @@
             },
             "development": {
               "browserTarget": "universal-internationalization:build:development"
+            },
+            "development_no_localize": {
+              "browserTarget": "universal-internationalization:build:development_no_localize"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development_no_localize"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "browserTarget": "universal-internationalization:build"
+            "browserTarget": "universal-internationalization:build",
+            "format": "xlf2",
+            "outputPath": "src/locale",
+            "targetFiles": [
+              "messages.ru.xlf"
+            ],
+            "includeContext": true,
+            "trim": true
           }
         },
         "test": {
@@ -94,8 +129,70 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "localize": true,
+              "outputPath": "dist/prod/server",
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "outputPath": "dist/dev/server",
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "universal-internationalization:build:development",
+              "serverTarget": "universal-internationalization:server:development"
+            },
+            "production": {
+              "browserTarget": "universal-internationalization:build:production",
+              "serverTarget": "universal-internationalization:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "guessRoutes": false,
+            "routesFile": "pre-render-routes.txt"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "universal-internationalization:build:production",
+              "serverTarget": "universal-internationalization:server:production"
+            },
+            "development": {
+              "browserTarget": "universal-internationalization:build:development",
+              "serverTarget": "universal-internationalization:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ce4424e1-162a-4855-ac22-5936d158fa14"
   }
 }

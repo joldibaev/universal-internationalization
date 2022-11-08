@@ -1,0 +1,22 @@
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en" trgLang="ru">
+  <file original="ng.template" id="ngi18n">
+    <unit id="4584092443788135411">
+      <notes>
+        <note category="location">src/app/app.component.html:1</note>
+      </notes>
+      <segment state="initial">
+        <source>Hello World</source>
+        <target>Привет Мир!</target>
+      </segment>
+    </unit>
+    <unit id="4501479471257812817">
+      <notes>
+        <note category="location">src/app/app.component.html:2</note>
+      </notes>
+      <segment state="initial">
+        <source>Lorem ipsum dolor sit amet.</source>
+        <target>Клиент очень счастлив.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
