@@ -7,7 +7,7 @@
     "test": "ng test",
     "extract-i18n": "ng extract-i18n",
     "dev:ssr": "ng run universal-internationalization:serve-ssr",
-    "serve:ssr": "node dist/universal-internationalization/server/main.js",
+    "serve:ssr": "node dist/prod/proxy-server.js",
     "build:ssr": "ng build && ng run universal-internationalization:server",
     "prerender": "ng run universal-internationalization:prerender"
   },

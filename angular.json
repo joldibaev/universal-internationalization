@@ -41,7 +41,7 @@
           },
           "configurations": {
             "production": {
-              "outputPath": "dist/prod/server",
+              "outputPath": "dist/prod/browser",
               "budgets": [
                 {
                   "type": "initial",
@@ -63,7 +63,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "outputPath": "dist/dev/server",
+              "outputPath": "dist/dev/browser",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -72,7 +72,7 @@
               "namedChunks": true
             },
             "development_no_localize": {
-              "outputPath": "dist/dev/server",
+              "outputPath": "dist/dev/browser",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -175,7 +175,7 @@
           "builder": "@nguniversal/builders:prerender",
           "options": {
             "guessRoutes": false,
-            "routesFile": "pre-render-routes.txt"
+            "routes": ["/"]
           },
           "configurations": {
             "production": {
